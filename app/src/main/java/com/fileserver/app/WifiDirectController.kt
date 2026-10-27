@@ -10,7 +10,6 @@ import android.net.wifi.p2p.WifiP2pConfig
 import android.net.wifi.p2p.WifiP2pDevice
 import android.net.wifi.p2p.WifiP2pGroup
 import android.net.wifi.p2p.WifiP2pManager
-import android.net.wps.WpsInfo
 import android.os.Handler
 import android.os.Looper
 import androidx.core.content.ContextCompat
@@ -215,9 +214,9 @@ object WifiDirectController {
         val m = manager
         val ch = channel
         if (m == null || ch == null) { onResult(false, reasonText(WifiP2pManager.P2P_UNSUPPORTED)); return }
+        // The default WPS setup of WifiP2pConfig is already push-button (PBC).
         val config = WifiP2pConfig().apply {
             deviceAddress = device.deviceAddress
-            wps.setup = WpsInfo.PBC
         }
         try {
             m.connect(ch, config, listener(onResult) {
